@@ -65,7 +65,7 @@ class LoginController extends AppController{
 		CakeSession::delete('user_id');
 		CakeSession::delete('user_pass');
 
-		$this->redirect('/login');
+		$this->redirect('/login?login=logout');
 
 	}
 
