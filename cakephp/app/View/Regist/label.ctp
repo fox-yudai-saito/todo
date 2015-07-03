@@ -44,7 +44,24 @@
 		<hr>
 
 		<div id="label_area">
-			ラベル一覧
+			<table>
+				<tr>
+					<td colspan="2">ラベル一覧</td>
+				</tr>
+				<?php foreach ($labels as $label): ?>
+				<tr>
+					<td>
+						<?php echo $label['label_tbs']['name'] ?>
+					</td>
+					<td>
+						<form class="" action="/todo/cakephp/regist/run_delete_label" method="post">
+							<input type="hidden" name="delete_label_id" value="<?php echo $label['label_tbs']['id']; ?>">
+							<input type="submit" name="delete_label_btn" value="削除">
+						</form>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
 		</div>
 	</div>
 

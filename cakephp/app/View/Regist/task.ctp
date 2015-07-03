@@ -19,7 +19,6 @@
 		padding-top: 100px;
 		margin-bottom: 50px;
 	}
-
 </style>
 
 <div id="page_area">

@@ -36,7 +36,7 @@
 	<div id="main_area">
 		<div id="form_area">
 			<form class="" action="/todo/cakephp/regist/run_regist_project" method="POST">
-				<input type="text" name="regist_project_name" style="width:300px;">
+				<input type="text" name="regist_project_name" style="width:300px;" required>
 				<input type="submit" name="run_regist_project_btn" value="追加">
 			</form>
 		</div>
@@ -44,7 +44,24 @@
 		<hr>
 
 		<div id="project_area">
-			プロジェクト一覧
+			<table>
+				<tr>
+					<td colspan="2">プロジェクト一覧</td>
+				</tr>
+				<?php foreach ($projects as $project): ?>
+				<tr>
+					<td>
+						<?php echo $project['project_tbs']['name'] ?>
+					</td>
+					<td>
+						<form class="" action="/todo/cakephp/regist/run_delete_project" method="post">
+							<input type="hidden" name="delete_project_id" value="<?php echo $project['project_tbs']['id']; ?>">
+							<input type="submit" name="delete_project_btn" value="削除">
+						</form>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
 		</div>
 	</div>
 
