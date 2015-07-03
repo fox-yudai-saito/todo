@@ -43,13 +43,14 @@ class LoginController extends AppController{
 				)
 			);
 
-			$res = $this->account_tbs->find('count', $where);
+			$res = $this->account_tbs->find('all', $where);
 
-			if ($res > 0) {
+			if (count($res) > 0) {
 				// 成功
 				// セッション保存
 				CakeSession::write('user_id', $input_data['account_id']);
 				CakeSession::write('user_pass', $input_data['account_pass']);
+				CakeSession::write('user_name', $res[0]['account_tbs']['name']);
 
 				$this->redirect('/task');
 			}else {
