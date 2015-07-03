@@ -34,19 +34,22 @@
 
 	<div id="main_area">
 		<div id="form_area">
-			<form class="" action="/todo/cakephp/regist/run_regist_project" method="POST">
+			<form class="" action="/todo/cakephp/regist/run_regist_task" method="POST">
 				<table>
 					<tr>
-						<td>タイトル：</td><td><input type="text" name="regist_task_name"></td>
+						<td>タイトル：</td><td><input type="text" name="regist_task_name" required></td>
 					</tr>
 					<tr>
-						<td>メモ：</td><td><input type="textarea" name="regist_task_memo"></td>
+						<td>メモ：</td><td><textarea name="regist_task_memo" rows="8" cols="40"></textarea></td>
 					</tr>
 					<tr>
 						<td>プロジェクト：</td>
 						<td>
 							<select name="regist_task_project">
-
+								<option></option>
+								<?php foreach ($projects as $project): ?>
+								<option value="<?php echo $project['project_tbs']['id']; ?>"><?php echo $project['project_tbs']['name']; ?></option>
+								<?php endforeach; ?>
 							</select>
 						</td>
 					</tr>
@@ -54,12 +57,15 @@
 						<td>ラベル：</td>
 						<td>
 							<select name="regist_task_label">
-
+								<option></option>
+								<?php foreach ($labels as $label): ?>
+								<option value="<?php echo $label['label_tbs']['id']; ?>"><?php echo $label['label_tbs']['name']; ?></option>
+								<?php endforeach; ?>
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td>日付：</td><td><input type="datetime" name="regist_task_date" value=""></td>
+						<td>日付：</td><td><input type="date" name="regist_task_date"></td>
 					</tr>
 				</table>
 					<input type="submit" name="run_regist_task_btn" value="登録">
