@@ -1,12 +1,15 @@
 <style>
 	div#side_area{
-		width: 200px;
+		width: 150px;
 		float: left;
 		background-color: skyblue;
 	}
 	div#main_area{
-		width: 800px;
+		width: 600px;
 		float: left;
+	}
+	div#side_area div{
+		margin-top: 20px;
 	}
 </style>
 
@@ -14,6 +17,8 @@
 <div id="side_area">
 	<div>
 		<p><?php echo $account_name; ?></p>
+	</div>
+	<div>
 		<form action="/todo/cakephp/login/run_logout" method="POST">
 			<input type="submit" name="logout_btn" value="ログアウト">
 		</form>
@@ -24,29 +29,58 @@
 		</form>
 	</div>
 	<div>
-		<p>プロジェクト</p>
-		<form class="" action="/todo/cakephp/regist/project" method="POST">
-			<input type="submit" name="project_btn" value="追加">
-		</form>
+		プロジェクト
 		<ul>
 			<?php foreach ($projects as $project): ?>
 				<li><?php echo $project['project_tbs']['name']; ?></li>
 			<?php endforeach; ?>
 		</ul>
+		<form class="" action="/todo/cakephp/regist/project" method="POST">
+			<input type="submit" name="project_btn" value="追加">
+		</form>
 	</div>
 	<div>
-		<p>ラベル</p>
-		<form class="" action="/todo/cakephp/regist/label" method="POST">
-			<input type="submit" name="label_btn" value="追加">
-		</form>
+		ラベル
 		<ul>
 			<?php foreach ($labels as $label): ?>
 				<li><?php echo $label['label_tbs']['name']; ?></li>
 			<?php endforeach; ?>
 		</ul>
+		<form class="" action="/todo/cakephp/regist/label" method="POST">
+			<input type="submit" name="label_btn" value="追加">
+		</form>
 	</div>
 	<div>
 		<!-- カレンダー表示 -->
+		<table>
+			<thead>
+				<tr>
+					<th>日</th>
+					<th>月</th>
+					<th>火</th>
+					<th>水</th>
+					<th>木</th>
+					<th>金</th>
+					<th>土</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<?php $count = 0; ?>
+					<?php foreach ($calendar as $day): ?>
+						<td>
+							<?php $count++; ?>
+							<?php echo $day['day']; ?>
+						</td>
+						<?php if ($count == 7): ?>
+						</tr>
+						<tr>
+						<?php $count = 0; ?>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>
 

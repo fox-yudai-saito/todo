@@ -37,6 +37,43 @@ class TaskController extends AppController{
 		$res = $this->label_tbs->find('all', $where);
 		$this->set('labels', $res);
 
+		// カレンダー
+		// 現在の年月
+		$year = date('Y');
+		$month = date('n');
+		// 現在の年月の月末
+		$last_day = date('d', mktime(0, 0, 0, $month + 1, 0, $year));
+
+		$calendar = array();
+		$j = 0;
+
+		// for文で月末まで回して$calendarに格納
+		for ($i=1; $i <= $last_day; $i++) {
+			//曜日取得
+			$day_of_week = date('w', mktime(0, 0, 0, $month, $i, $year));
+
+			// 1日の場合1日目の曜日まで空文字を入れる
+			if ($i ==1) {
+				for ($a=1; $a <= $day_of_week ; $a++) {
+					$calendar[$j]['day'] = '';
+					$j++;
+				}
+			}
+			$calendar[$j]['day'] = $i;
+			$j++;
+
+			// 月末の場合残りの文に空文字をセット
+			if ($i == $last_day) {
+				for ($b=0; $b <= 6; $b++) {
+					$calendar[$j]['day'] = '';
+					$j++;
+				}
+			}
+		}
+
+		$this->set('calendar', $calendar);
+
+
 		// メインエリアーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 		// タスク一覧取得
 		$where = array(
