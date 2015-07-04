@@ -1,34 +1,75 @@
 <style>
 	div#side_area{
-		width: 150px;
+		width: 200px;
 		float: left;
 		background-color: skyblue;
 	}
+		div#acc_name_area{
+			width: 200px;
+			margin: 10px 0px;
+			text-align: center;
+			font-size: 16px;
+		}
+		div#logout_btn_area{
+			width: 200px;
+			margin: 10px 0px;
+			font-size: 12px;
+			text-align: right;
+		}
+		div#task_btn_area{
+			width: 200px;
+			margin: 10px 0px;
+			text-align: center;
+		}
+		div#project_area{
+			width: 200px;
+			margin: 10px 0px;
+		}
+		div#label_area{
+			width: 200px;
+			margin: 10px 0px;
+		}
+		div#calendar_area{
+			width: 190px;
+			margin: 20px auto;
+		}
+			div#calendar_area table{
+				border: solid 2px;
+				border-collapse: collapse;
+			}
+			div#calendar_area th{
+				font-size: 8px;
+				text-align: center;
+				border: solid 2px;
+			}
+			div#calendar_area td{
+				font-size: 8px;
+				text-align: center;
+				border: solid 2px;
+			}
 	div#main_area{
-		width: 600px;
+		width: 300px;
 		float: left;
-	}
-	div#side_area div{
-		margin-top: 20px;
 	}
 </style>
 
 
 <div id="side_area">
-	<div>
+	<div id="acc_name_area">
 		<p><?php echo $account_name; ?></p>
 	</div>
-	<div>
+	<div id="logout_btn_area">
 		<form action="/todo/cakephp/login/run_logout" method="POST">
 			<input type="submit" name="logout_btn" value="ログアウト">
 		</form>
 	</div>
-	<div>
+	<hr>
+	<div id="task_btn_area">
 		<form action="/todo/cakephp/regist/task" method="POST">
 			<input type="submit" name="task_btn" value="新規追加">
 		</form>
 	</div>
-	<div>
+	<div id="project_area">
 		プロジェクト
 		<ul>
 			<?php foreach ($projects as $project): ?>
@@ -38,7 +79,7 @@
 		<form class="" action="/todo/cakephp/regist/project" method="POST">
 			<input type="submit" name="project_btn" value="追加">
 		</form>
-	</div>
+	</div id="label_area">
 	<div>
 		ラベル
 		<ul>
@@ -50,7 +91,7 @@
 			<input type="submit" name="label_btn" value="追加">
 		</form>
 	</div>
-	<div>
+	<div id="calendar_area">
 		<!-- カレンダー表示 -->
 		<table>
 			<thead>
@@ -85,25 +126,29 @@
 </div>
 
 <div id="main_area">
+	<?php for ($i=0; $i < 7; $i++): ?>
 	<table>
-		<?php for ($i=0; $i < 7; $i++): ?>
-		<tr>
-			<td colspan="2">
-				<?php echo date("m月d 日(D)", strtotime("+{$i} day")); ?>
-			</td>
-		</tr>
-		<?php foreach ($tasks as $task): ?>
-		<?php if ($task['task_tbs']['date'] == date("Y-m-d", strtotime("+{$i} day"))): ?>
-		<tr>
-			<td>
-				チェックボックス
-			</td>
-			<td>
-				<?php echo $task['task_tbs']['name']; ?>
-			</td>
-		</tr>
-		<?php endif; ?>
-		<?php endforeach; ?>
-		<?php endfor; ?>
+		<thead>
+			<tr>
+				<td colspan="2" style="text-align:center;">
+					<?php echo date("m月d 日(D)", strtotime("+{$i} day")); ?>
+				</td>
+			</tr>
+		</thead>
+	<?php foreach ($tasks as $task): ?>
+	<?php if ($task['task_tbs']['date'] == date("Y-m-d", strtotime("+{$i} day"))): ?>
+		<tbody>
+			<tr>
+				<td>
+					ボタン
+				</td>
+				<td>
+					<?php echo $task['task_tbs']['name']; ?>
+				</td>
+			</tr>
+		</tbody>
+	<?php endif; ?>
+	<?php endforeach; ?>
 	</table>
+	<?php endfor; ?>
 </div>

@@ -7,9 +7,10 @@ class LoginController extends AppController{
 	public function index() {
 		// セッションチェック
 		$user_id = CakeSession::read('user_id');
+		$account_name = CakeSession::read('user_name');
 		$user_pass = CakeSession::read('user_pass');
 
-		if (isset($user_id)&&isset($user_pass)) {
+		if (isset($user_id) && isset($user_pass) && isset($account_name)) {
 			$this->redirect('/task');
 		}
 
@@ -65,6 +66,7 @@ class LoginController extends AppController{
 
 		CakeSession::delete('user_id');
 		CakeSession::delete('user_pass');
+		CakeSession::delete('user_name');
 
 		$this->redirect('/login?login=logout');
 

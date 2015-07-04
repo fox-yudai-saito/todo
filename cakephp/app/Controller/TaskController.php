@@ -9,6 +9,13 @@ class TaskController extends AppController{
 		// セッション取得
 		$account_id = CakeSession::read('user_id');
 		$account_name = CakeSession::read('user_name');
+		$account_pass = CakeSession::read('user_pass');
+
+		if (isset($account_id) && isset($account_pass) && isset($account_name)) {
+
+		} else {
+			$this->redirect('/login');
+		}
 
 		// モデルロード
 		$this->loadModel('project_tbs');
@@ -53,18 +60,19 @@ class TaskController extends AppController{
 			$day_of_week = date('w', mktime(0, 0, 0, $month, $i, $year));
 
 			// 1日の場合1日目の曜日まで空文字を入れる
-			if ($i ==1) {
+			if ($i == 1) {
 				for ($a=1; $a <= $day_of_week ; $a++) {
 					$calendar[$j]['day'] = '';
 					$j++;
 				}
 			}
+
 			$calendar[$j]['day'] = $i;
 			$j++;
 
-			// 月末の場合残りの文に空文字をセット
+			// 月末の場合残りに空文字をセット
 			if ($i == $last_day) {
-				for ($b=0; $b <= 6; $b++) {
+				for ($b = $day_of_week; $b < 6; $b++) {
 					$calendar[$j]['day'] = '';
 					$j++;
 				}

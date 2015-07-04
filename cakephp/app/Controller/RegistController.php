@@ -7,8 +7,17 @@ class RegistController extends AppController{
 	// ページ描画系ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 
 	public function task() {
-		// ログインしているユーザー取得
+		// セッション取得
 		$account_id = CakeSession::read('user_id');
+		$account_name = CakeSession::read('user_name');
+		$account_pass = CakeSession::read('user_pass');
+
+		if (isset($account_id) && isset($account_pass) && isset($account_name)) {
+
+		} else {
+			$this->redirect('/login');
+		}
+
 
 		// プロジェクト一覧取得
 		$this->loadModel('project_tbs');
@@ -33,8 +42,17 @@ class RegistController extends AppController{
 	}
 
 	public function project() {
-		// ログインしているユーザー取得
+		// セッション取得
 		$account_id = CakeSession::read('user_id');
+		$account_name = CakeSession::read('user_name');
+		$account_pass = CakeSession::read('user_pass');
+
+		if (isset($account_id) && isset($account_pass) && isset($account_name)) {
+
+		} else {
+			$this->redirect('/login');
+		}
+
 		// プロジェクト一覧取得
 		$this->loadModel('project_tbs');
 		$where = array(
@@ -47,8 +65,17 @@ class RegistController extends AppController{
 	}
 
 	public function label() {
-		// ログインしているユーザー取得
+		// セッション取得
 		$account_id = CakeSession::read('user_id');
+		$account_name = CakeSession::read('user_name');
+		$account_pass = CakeSession::read('user_pass');
+
+		if (isset($account_id) && isset($account_pass) && isset($account_name)) {
+
+		} else {
+			$this->redirect('/login');
+		}
+
 		// ラベル一覧取得
 		$this->loadModel('label_tbs');
 		$where = array(
