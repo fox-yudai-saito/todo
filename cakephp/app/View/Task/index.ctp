@@ -126,29 +126,24 @@
 </div>
 
 <div id="main_area">
-	<?php for ($i=0; $i < 7; $i++): ?>
-	<table>
-		<thead>
-			<tr>
-				<td colspan="2" style="text-align:center;">
-					<?php echo date("m月d 日(D)", strtotime("+{$i} day")); ?>
-				</td>
-			</tr>
-		</thead>
-	<?php foreach ($tasks as $task): ?>
-	<?php if ($task['task_tbs']['date'] == date("Y-m-d", strtotime("+{$i} day"))): ?>
-		<tbody>
-			<tr>
-				<td>
-					ボタン
-				</td>
-				<td>
-					<?php echo $task['task_tbs']['name']; ?>
-				</td>
-			</tr>
-		</tbody>
-	<?php endif; ?>
-	<?php endforeach; ?>
-	</table>
-	<?php endfor; ?>
+	<div id="task_area">
+		<?php for ($i=0; $i < 7; $i++):?>
+		<table>
+			<thead>
+				<tr>
+					<th><?php echo date('Y-m-d(D)', strtotime('+'.$i.' day')); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($tasks[$i] as $task): ?>
+				<tr>
+					<td>
+						<?php echo $task['task_tbs']['name']; ?>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+		<?php endfor; ?>
+	</div>
 </div>

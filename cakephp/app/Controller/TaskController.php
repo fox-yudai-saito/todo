@@ -83,13 +83,22 @@ class TaskController extends AppController{
 
 
 		// メインエリアーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
-		// タスク一覧取得
-		$where = array(
-			'conditions' => array(
-				'account_id' => $account_id
-			)
-		);
-		$res = $this->task_tbs->find('all', $where);
+		// タスク取得
+		// 現在の日付から1週間分
+		$today = date('d');
+		$j = 0;
+
+		for ($i=$today; $i < $today+7; $i++) {
+			$date = date('Y-m-'.$i);
+			$where = array(
+				'conditions' => array(
+					'date' => $date,
+					'account_id' => $account_id
+				)
+			);
+			$res[$j] = $this->task_tbs->find('all', $where);
+			$j++;
+		}
 		$this->set('tasks', $res);
 
 	}
