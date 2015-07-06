@@ -49,6 +49,7 @@
 			}
 	div#main_area{
 		width: 300px;
+		overflow: hidden;
 		float: left;
 	}
 </style>
@@ -73,7 +74,11 @@
 		プロジェクト
 		<ul>
 			<?php foreach ($projects as $project): ?>
-				<li><?php echo $project['project_tbs']['name']; ?></li>
+				<li>
+					<a href="task?label=<?php echo $project['project_tbs']['id']; ?>">
+						<?php echo $project['project_tbs']['name']; ?>
+					</a>
+				</li>
 			<?php endforeach; ?>
 		</ul>
 		<form class="" action="/todo/cakephp/regist/project" method="POST">
@@ -84,7 +89,11 @@
 		ラベル
 		<ul>
 			<?php foreach ($labels as $label): ?>
-				<li><?php echo $label['label_tbs']['name']; ?></li>
+				<li>
+					<a href="task?label=<?php echo $label['label_tbs']['id']; ?>">
+						<?php echo $label['label_tbs']['name']; ?>
+					</a>
+				</li>
 			<?php endforeach; ?>
 		</ul>
 		<form class="" action="/todo/cakephp/regist/label" method="POST">

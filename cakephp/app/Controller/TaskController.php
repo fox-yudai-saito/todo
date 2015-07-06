@@ -84,21 +84,54 @@ class TaskController extends AppController{
 
 		// メインエリアーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 		// タスク取得
-		// 現在の日付から1週間分
 		$today = date('d');
 		$j = 0;
 
-		for ($i=$today; $i < $today+7; $i++) {
-			$date = date('Y-m-'.$i);
-			$where = array(
-				'conditions' => array(
-					'date' => $date,
-					'completed' => 0,
-					'account_id' => $account_id
-				)
-			);
-			$res[$j] = $this->task_tbs->find('all', $where);
-			$j++;
+		$get_data = $this->request->query;
+		if (isset($get_data['project'])) { 					// project検索
+			for ($i=$today; $i < $today+7; $i++) {
+				$date = date('Y-m-'.$i);
+				$where = array(
+					'conditions' => array(
+						'date' => $date,
+						'completed' => 0,
+						'account_id' => $account_id,
+						'project_id' => $get_data['project']
+					)
+				);
+				$res[$j] = $this->task_tbs->find('all', $where);
+				$j++;
+			}
+		}elseif (isset($get_data['label'])) {				// label検索
+			for ($i=$today; $i < $today+7; $i++) {
+				$date = date('Y-m-'.$i);
+				$where = array(
+					'conditions' => array(
+						'date' => $date,
+						'completed' => 0,
+						'account_id' => $account_id,
+						'label_id' => $get_data['label']
+					)
+				);
+				$res[$j] = $this->task_tbs->find('all', $where);
+				$j++;
+			}
+		}elseif (isset($get_data['date'])) {				// カレンダー検索
+
+		}else {
+			// 現在の日付から1週間分
+			for ($i=$today; $i < $today+7; $i++) {
+				$date = date('Y-m-'.$i);
+				$where = array(
+					'conditions' => array(
+						'date' => $date,
+						'completed' => 0,
+						'account_id' => $account_id
+					)
+				);
+				$res[$j] = $this->task_tbs->find('all', $where);
+				$j++;
+			}
 		}
 		$this->set('tasks', $res);
 
