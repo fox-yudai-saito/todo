@@ -117,7 +117,16 @@ class TaskController extends AppController{
 				$j++;
 			}
 		}elseif (isset($get_data['date'])) {				// カレンダー検索
-
+			$date = date('Y-m-'.$i);
+			$where = array(
+				'conditions' => array(
+					'date' => $date,
+					'completed' => 0,
+					'account_id' => $account_id,
+					'date' => date('Y-m-d', mktime(0, 0, 0, date('m'), $get_data['date'], date('Y')))
+				)
+			);
+			$res = $this->task_tbs->find('all', $where);
 		}else {
 			// 現在の日付から1週間分
 			for ($i=$today; $i < $today+7; $i++) {

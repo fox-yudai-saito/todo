@@ -1,36 +1,36 @@
 <style>
 	div#side_area{
-		width: 200px;
+		width: 210px;
 		float: left;
 		background-color: skyblue;
 	}
 		div#acc_name_area{
-			width: 200px;
+			width: 210px;
 			margin: 10px 0px;
 			text-align: center;
 			font-size: 16px;
 		}
 		div#logout_btn_area{
-			width: 200px;
+			width: 210px;
 			margin: 10px 0px;
 			font-size: 12px;
 			text-align: right;
 		}
 		div#task_btn_area{
-			width: 200px;
+			width: 210px;
 			margin: 10px 0px;
 			text-align: center;
 		}
 		div#project_area{
-			width: 200px;
+			width: 210px;
 			margin: 10px 0px;
 		}
 		div#label_area{
-			width: 200px;
+			width: 210px;
 			margin: 10px 0px;
 		}
 		div#calendar_area{
-			width: 190px;
+			width: 200px;
 			margin: 20px auto;
 		}
 			div#calendar_area table{
@@ -50,6 +50,10 @@
 	div#main_area{
 		width: 300px;
 		overflow: hidden;
+		float: left;
+	}
+	div#reset_btn_area{
+		width: 60px;
 		float: left;
 	}
 </style>
@@ -105,6 +109,11 @@
 		<table>
 			<thead>
 				<tr>
+					<th colspan="7">
+						<?php echo date('Y年m月'); ?>
+					</th>
+				</tr>
+				<tr>
 					<th>日</th>
 					<th>月</th>
 					<th>火</th>
@@ -120,7 +129,9 @@
 					<?php foreach ($calendar as $day): ?>
 						<td>
 							<?php $count++; ?>
-							<?php echo $day['day']; ?>
+							<a href="task?date=<?php echo $day['day']; ?>">
+								<?php echo $day['day']; ?>
+							</a>
 						</td>
 						<?php if ($count == 7): ?>
 						</tr>
@@ -136,29 +147,61 @@
 
 <div id="main_area">
 	<div id="task_area">
-		<?php for ($i=0; $i < 7; $i++):?>
-		<table>
-			<thead>
-				<tr>
-					<th colspan="2"><?php echo date('Y-m-d(D)', strtotime('+'.$i.' day')); ?></th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach ($tasks[$i] as $task): ?>
-				<tr>
-					<td style="width:40px;text-align:center;">
-						<form action="/todo/cakephp/task/completed_task" method="POST">
-							<input type="hidden" name="completed_task_id" value="<?php echo $task['task_tbs']['id']; ?>">
-							<input type="submit" name="completed_btn" value="" style="width:30px;">
-						</form>
-					</td>
-					<td style="font-size:16px;line-height:30px;">
-						<?php echo $task['task_tbs']['name']; ?>
-					</td>
-				</tr>
-				<?php endforeach; ?>
-			</tbody>
-		</table>
-		<?php endfor; ?>
+		<?php if (isset($_GET['date'])): ?>
+			<table>
+				<thead>
+					<tr>
+						<th colspan="2">
+							<?php echo date('Y-m-d(D)', mktime(0, 0, 0, date('m'), $_GET['date'], date('Y'))); ?>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($tasks as $task): ?>
+					<tr>
+						<td style="width:40px;text-align:center;">
+							<form action="/todo/cakephp/task/completed_task" method="POST">
+								<input type="hidden" name="completed_task_id" value="<?php echo $task['task_tbs']['id']; ?>">
+								<input type="submit" name="completed_btn" value="" style="width:30px;">
+							</form>
+						</td>
+						<td style="font-size:16px;line-height:30px;">
+							<?php echo $task['task_tbs']['name']; ?>
+						</td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		<?php else: ?>
+			<?php for ($i=0; $i < 7; $i++):?>
+			<table>
+				<thead>
+					<tr>
+						<th colspan="2">
+							<?php echo date('Y-m-d(D)', strtotime('+'.$i.' day')); ?>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($tasks[$i] as $task): ?>
+					<tr>
+						<td style="width:40px;text-align:center;">
+							<form action="/todo/cakephp/task/completed_task" method="POST">
+								<input type="hidden" name="completed_task_id" value="<?php echo $task['task_tbs']['id']; ?>">
+								<input type="submit" name="completed_btn" value="" style="width:30px;">
+							</form>
+						</td>
+						<td style="font-size:16px;line-height:30px;">
+							<?php echo $task['task_tbs']['name']; ?>
+						</td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+			<?php endfor; ?>
+		<?php endif; ?>
 	</div>
+</div>
+<div id="reset_btn_area">
+	<input type="button" name="reset_btn" value="リセット" onclick="location.href='task'" style="font-size:16px;">
 </div>
