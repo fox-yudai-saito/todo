@@ -131,13 +131,19 @@
 		<table>
 			<thead>
 				<tr>
-					<th><?php echo date('Y-m-d(D)', strtotime('+'.$i.' day')); ?></th>
+					<th colspan="2"><?php echo date('Y-m-d(D)', strtotime('+'.$i.' day')); ?></th>
 				</tr>
 			</thead>
 			<tbody>
 				<?php foreach ($tasks[$i] as $task): ?>
 				<tr>
-					<td>
+					<td style="width:40px;text-align:center;">
+						<form action="/todo/cakephp/task/completed_task" method="POST">
+							<input type="hidden" name="completed_task_id" value="<?php echo $task['task_tbs']['id']; ?>">
+							<input type="submit" name="completed_btn" value="" style="width:30px;">
+						</form>
+					</td>
+					<td style="font-size:16px;line-height:30px;">
 						<?php echo $task['task_tbs']['name']; ?>
 					</td>
 				</tr>

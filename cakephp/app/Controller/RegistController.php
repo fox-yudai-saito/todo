@@ -101,6 +101,7 @@ class RegistController extends AppController{
 				'name' => $input_data['regist_task_name'],
 				'memo' => $input_data['regist_task_memo'],
 				'date' => $input_data['regist_task_date'],
+				'completed' => 0,
 				'project_id' => $input_data['regist_task_project'],
 				'label_id' => $input_data['regist_task_label'],
 				'account_id' => $account_id,
@@ -108,7 +109,7 @@ class RegistController extends AppController{
 		);
 		$this->task_tbs->save();
 
-		$this->redirect('/task?insert=completed');
+		$this->redirect('/task');
 	}
 
 	public function run_regist_project() {

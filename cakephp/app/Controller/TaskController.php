@@ -93,6 +93,7 @@ class TaskController extends AppController{
 			$where = array(
 				'conditions' => array(
 					'date' => $date,
+					'completed' => 0,
 					'account_id' => $account_id
 				)
 			);
@@ -101,6 +102,22 @@ class TaskController extends AppController{
 		}
 		$this->set('tasks', $res);
 
+	}
+
+	public function completed_task() {
+		//タスク完了
+
+		$this->loadModel('task_tbs');
+		// POSTデータ取得
+		$input_data = $this->request->data;
+
+		// UPDATE
+		$this->task_tbs->updateAll(
+			array('completed' => 1),
+			array('id' => $input_data['completed_task_id'])
+		);
+
+		$this->redirect('/task');
 	}
 
 }
