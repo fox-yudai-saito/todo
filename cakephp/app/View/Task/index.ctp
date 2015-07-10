@@ -58,7 +58,6 @@
 	}
 </style>
 
-
 <div id="side_area">
 	<div id="acc_name_area">
 		<p><?php echo $account_name; ?></p>
@@ -79,7 +78,7 @@
 		<ul>
 			<?php foreach ($projects as $project): ?>
 				<li>
-					<a href="task?label=<?php echo $project['project_tbs']['id']; ?>">
+					<a href="task?project=<?php echo $project['project_tbs']['id']; ?>">
 						<?php echo $project['project_tbs']['name']; ?>
 					</a>
 				</li>
@@ -153,6 +152,31 @@
 					<tr>
 						<th colspan="2">
 							<?php echo date('Y-m-d(D)', mktime(0, 0, 0, date('m'), $_GET['date'], date('Y'))); ?>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($tasks as $task): ?>
+					<tr>
+						<td style="width:40px;text-align:center;">
+							<form action="/todo/cakephp/task/completed_task" method="POST">
+								<input type="hidden" name="completed_task_id" value="<?php echo $task['task_tbs']['id']; ?>">
+								<input type="submit" name="completed_btn" value="" style="width:30px;">
+							</form>
+						</td>
+						<td style="font-size:16px;line-height:30px;">
+							<?php echo $task['task_tbs']['name']; ?>
+						</td>
+					</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		<?php elseif (isset($_GET['project']) || isset($_GET['label'])): ?>
+			<table>
+				<thead>
+					<tr>
+						<th colspan="2">
+							<?php echo isset($_GET['project']) ? $name['project_tbs']['name'] : $name['label_tbs']['name']; ?>
 						</th>
 					</tr>
 				</thead>

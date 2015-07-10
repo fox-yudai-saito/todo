@@ -89,33 +89,37 @@ class TaskController extends AppController{
 
 		$get_data = $this->request->query;
 		if (isset($get_data['project'])) { 					// project検索
-			for ($i=$today; $i < $today+7; $i++) {
-				$date = date('Y-m-'.$i);
-				$where = array(
-					'conditions' => array(
-						'date' => $date,
-						'completed' => 0,
-						'account_id' => $account_id,
-						'project_id' => $get_data['project']
-					)
-				);
-				$res[$j] = $this->task_tbs->find('all', $where);
-				$j++;
-			}
+			$where = array(
+				'conditions' => array(
+					'completed' => 0,
+					'account_id' => $account_id,
+					'project_id' => $get_data['project']
+				)
+			);
+			$res = $this->task_tbs->find('all', $where);
+			$where2 = array(
+				'conditions' => array(
+					'id' => $get_data['project']
+				)
+			);
+			$res2 = $this->project_tbs->find('first', $where2);
+			$this->set('name', $res2);
 		}elseif (isset($get_data['label'])) {				// label検索
-			for ($i=$today; $i < $today+7; $i++) {
-				$date = date('Y-m-'.$i);
-				$where = array(
-					'conditions' => array(
-						'date' => $date,
-						'completed' => 0,
-						'account_id' => $account_id,
-						'label_id' => $get_data['label']
-					)
-				);
-				$res[$j] = $this->task_tbs->find('all', $where);
-				$j++;
-			}
+			$where = array(
+				'conditions' => array(
+					'completed' => 0,
+					'account_id' => $account_id,
+					'label_id' => $get_data['label']
+				)
+			);
+			$res = $this->task_tbs->find('all', $where);
+			$where2 = array(
+				'conditions' => array(
+					'id' => $get_data['label']
+				)
+			);
+			$res2 = $this->label_tbs->find('first', $where2);
+			$this->set('name', $res2);
 		}elseif (isset($get_data['date'])) {				// カレンダー検索
 			$date = date('Y-m-'.$i);
 			$where = array(
@@ -143,7 +147,6 @@ class TaskController extends AppController{
 			}
 		}
 		$this->set('tasks', $res);
-
 	}
 
 	public function completed_task() {
