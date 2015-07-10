@@ -192,8 +192,8 @@
 				<tbody>
 					<?php foreach ($tasks as $task): ?>
 					<tr>
-						<td style="width:40px;text-align:center;">
-							<input type="checkbox" class="checkbox" value="<?php echo $task['task_tbs']['id']; ?>">
+						<td style="width:30px;">
+							<input type="checkbox" class="checkbox" value="<?php echo $task['task_tbs']['id']; ?>" style="width:16px; margin:8px 7px 4px 7px;">
 						</td>
 						<td style="font-size:16px;line-height:30px;">
 							<?php echo $task['task_tbs']['name']; ?>
@@ -215,8 +215,8 @@
 				<tbody>
 					<?php foreach ($tasks[$i] as $task): ?>
 					<tr>
-						<td style="width:40px;text-align:center;">
-							<input type="checkbox" class="checkbox" value="<?php echo $task['task_tbs']['id']; ?>">
+						<td style="width:30px;">
+							<input type="checkbox" class="checkbox" value="<?php echo $task['task_tbs']['id']; ?>" style="width:16px; margin:8px 7px 4px 7px;">
 						</td>
 						<td style="font-size:16px;line-height:30px;">
 							<?php echo $task['task_tbs']['name']; ?>
