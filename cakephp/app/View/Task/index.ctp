@@ -58,6 +58,31 @@
 	}
 </style>
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script>
+	$('document').ready(function(){
+		$('.checkbox').click(function(){
+			var a = $(this).parent().parent();
+			$.ajax ({
+				url: '/todo/cakephp/task/completed_task',
+				type: 'post',
+				dataType: 'json',
+				data: {'task_id': $('.checkbox:checked').val()},
+				success: function(res){
+					if (res) {
+						a.fadeOut();
+					}
+				},
+				error: function(xhr, textStatus, errorThrown){
+					console.dir('Error! ' + textStatus + ' ' + errorThrown);
+				}
+			});
+		});
+	});
+</script>
+
+<!-- サイドバー -->
 <div id="side_area">
 	<div id="acc_name_area">
 		<p><?php echo $account_name; ?></p>
@@ -144,14 +169,23 @@
 	</div>
 </div>
 
+<!-- ここからメインエリア -->
 <div id="main_area">
 	<div id="task_area">
-		<?php if (isset($_GET['date'])): ?>
+		<?php if (isset($_GET['date']) || isset($_GET['project']) || isset($_GET['label'])): ?>
 			<table>
 				<thead>
 					<tr>
 						<th colspan="2">
-							<?php echo date('Y-m-d(D)', mktime(0, 0, 0, date('m'), $_GET['date'], date('Y'))); ?>
+							<?php
+								if (isset($_GET['date'])) {
+									echo date('Y-m-d(D)', mktime(0, 0, 0, date('m'), $_GET['date'], date('Y')));
+								} elseif (isset($_GET['project'])) {
+									echo $name['project_tbs']['name'];
+								}elseif (isset($_GET['label'])) {
+									echo $name['label_tbs']['name'];
+								}
+							?>
 						</th>
 					</tr>
 				</thead>
@@ -159,35 +193,7 @@
 					<?php foreach ($tasks as $task): ?>
 					<tr>
 						<td style="width:40px;text-align:center;">
-							<form action="/todo/cakephp/task/completed_task" method="POST">
-								<input type="hidden" name="completed_task_id" value="<?php echo $task['task_tbs']['id']; ?>">
-								<input type="submit" name="completed_btn" value="" style="width:30px;">
-							</form>
-						</td>
-						<td style="font-size:16px;line-height:30px;">
-							<?php echo $task['task_tbs']['name']; ?>
-						</td>
-					</tr>
-					<?php endforeach; ?>
-				</tbody>
-			</table>
-		<?php elseif (isset($_GET['project']) || isset($_GET['label'])): ?>
-			<table>
-				<thead>
-					<tr>
-						<th colspan="2">
-							<?php echo isset($_GET['project']) ? $name['project_tbs']['name'] : $name['label_tbs']['name']; ?>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach ($tasks as $task): ?>
-					<tr>
-						<td style="width:40px;text-align:center;">
-							<form action="/todo/cakephp/task/completed_task" method="POST">
-								<input type="hidden" name="completed_task_id" value="<?php echo $task['task_tbs']['id']; ?>">
-								<input type="submit" name="completed_btn" value="" style="width:30px;">
-							</form>
+							<input type="checkbox" class="checkbox" value="<?php echo $task['task_tbs']['id']; ?>">
 						</td>
 						<td style="font-size:16px;line-height:30px;">
 							<?php echo $task['task_tbs']['name']; ?>
@@ -210,10 +216,7 @@
 					<?php foreach ($tasks[$i] as $task): ?>
 					<tr>
 						<td style="width:40px;text-align:center;">
-							<form action="/todo/cakephp/task/completed_task" method="POST">
-								<input type="hidden" name="completed_task_id" value="<?php echo $task['task_tbs']['id']; ?>">
-								<input type="submit" name="completed_btn" value="" style="width:30px;">
-							</form>
+							<input type="checkbox" class="checkbox" value="<?php echo $task['task_tbs']['id']; ?>">
 						</td>
 						<td style="font-size:16px;line-height:30px;">
 							<?php echo $task['task_tbs']['name']; ?>

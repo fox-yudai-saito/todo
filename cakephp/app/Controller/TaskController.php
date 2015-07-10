@@ -150,21 +150,21 @@ class TaskController extends AppController{
 	}
 
 	public function completed_task() {
+		$this->autoRender = FALSE;
 		//タスク完了
-
-		$this->loadModel('task_tbs');
 		// POSTデータ取得
 		$input_data = $this->request->data;
-
 		// UPDATE
-		$this->task_tbs->updateAll(
-			array('completed' => 1),
-			array('id' => $input_data['completed_task_id'])
-		);
+		$this->loadModel('task_tbs');
+		$update = array('completed' => 1);
+		$where = array('id' => $input_data['task_id']);
 
-		$this->redirect('/task');
+		if ($this->task_tbs->updateAll($update,$where)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
-
 }
 
  ?>
