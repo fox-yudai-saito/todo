@@ -181,9 +181,9 @@
 								if (isset($_GET['date'])) {
 									echo date('Y-m-d(D)', mktime(0, 0, 0, date('m'), $_GET['date'], date('Y')));
 								} elseif (isset($_GET['project'])) {
-									echo $name['project_tbs']['name'];
+									echo 'プロジェクト：'.$name['project_tbs']['name'];
 								}elseif (isset($_GET['label'])) {
-									echo $name['label_tbs']['name'];
+									echo 'ラベル：'.$name['label_tbs']['name'];
 								}
 							?>
 						</th>

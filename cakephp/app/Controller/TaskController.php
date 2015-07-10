@@ -30,6 +30,9 @@ class TaskController extends AppController{
 		$where = array(
 			'conditions' => array(
 				'account_id' => $account_id
+			),
+			'order' => array(
+				'name' => 'asc'
 			)
 		);
 		$res = $this->project_tbs->find('all', $where);
@@ -39,6 +42,9 @@ class TaskController extends AppController{
 		$where = array(
 			'conditions' => array(
 				'account_id' => $account_id
+			),
+			'order' => array(
+				'name' => 'asc'
 			)
 		);
 		$res = $this->label_tbs->find('all', $where);
