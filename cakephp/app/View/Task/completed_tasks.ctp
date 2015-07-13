@@ -65,7 +65,7 @@
 		$('.checkbox').click(function(){
 			var a = $(this).parent().parent();
 			$.ajax ({
-				url: '/todo/cakephp/task/run_complete_task',
+				url: '/todo/cakephp/task/run_uncomplete_task',
 				type: 'post',
 				dataType: 'json',
 				data: {'task_id': $('.checkbox:checked').val()},
@@ -103,7 +103,7 @@
 		<ul>
 			<?php foreach ($projects as $project): ?>
 				<li>
-					<a href="task?project=<?php echo $project['project_tbs']['id']; ?>">
+					<a href="/todo/cakephp/task?project=<?php echo $project['project_tbs']['id']; ?>">
 						<?php echo $project['project_tbs']['name']; ?>
 					</a>
 				</li>
@@ -118,7 +118,7 @@
 		<ul>
 			<?php foreach ($labels as $label): ?>
 				<li>
-					<a href="task?label=<?php echo $label['label_tbs']['id']; ?>">
+					<a href="/todo/cakephp/task?label=<?php echo $label['label_tbs']['id']; ?>">
 						<?php echo $label['label_tbs']['name']; ?>
 					</a>
 				</li>
@@ -129,7 +129,7 @@
 		</form>
 	</div>
 	<div>
-		<a href="/todo/cakephp/task/completed_tasks">完了済みタスク</a>
+		完了済みタスク
 	</div>
 	<div id="calendar_area">
 		<!-- カレンダー表示 -->
@@ -156,7 +156,7 @@
 					<?php foreach ($calendar as $day): ?>
 						<td>
 							<?php $count++; ?>
-							<a href="task?date=<?php echo $day['day']; ?>">
+							<a href="/todo/cakephp/task?date=<?php echo $day['day']; ?>">
 								<?php echo $day['day']; ?>
 							</a>
 						</td>
@@ -171,67 +171,32 @@
 		</table>
 	</div>
 </div>
-
 <!-- ここからメインエリア -->
 <div id="main_area">
 	<div id="reset_btn_area">
-		<input type="button" name="reset_btn" value="リセット" onclick="location.href='task'" style="font-size:16px;">
+		<input type="button" name="reset_btn" value="リセット" onclick="location.href='/todo/cakephp/task'" style="font-size:16px;">
 	</div>
 	<div id="task_area">
-		<?php if (isset($_GET['date']) || isset($_GET['project']) || isset($_GET['label'])): ?>
-			<table>
-				<thead>
-					<tr>
-						<th colspan="2">
-							<?php
-								if (isset($_GET['date'])) {
-									echo date('Y-m-d(D)', mktime(0, 0, 0, date('m'), $_GET['date'], date('Y')));
-								} elseif (isset($_GET['project'])) {
-									echo 'プロジェクト：'.$name['project_tbs']['name'];
-								}elseif (isset($_GET['label'])) {
-									echo 'ラベル：'.$name['label_tbs']['name'];
-								}
-							?>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach ($tasks as $task): ?>
-					<tr>
-						<td style="width:30px;">
-							<input type="checkbox" class="checkbox" value="<?php echo $task['task_tbs']['id']; ?>" style="width:16px; margin:8px 7px 4px 7px;">
-						</td>
-						<td style="font-size:16px;line-height:30px;">
-							<?php echo $task['task_tbs']['name']; ?>
-						</td>
-					</tr>
-					<?php endforeach; ?>
-				</tbody>
-			</table>
-		<?php else: ?>
-			<?php for ($i=0; $i < 7; $i++):?>
-			<table>
-				<thead>
-					<tr>
-						<th colspan="2">
-							<?php echo date('Y-m-d(D)', strtotime('+'.$i.' day')); ?>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach ($tasks[$i] as $task): ?>
-					<tr>
-						<td style="width:30px;">
-							<input type="checkbox" class="checkbox" value="<?php echo $task['task_tbs']['id']; ?>" style="width:16px; margin:8px 7px 4px 7px;">
-						</td>
-						<td style="font-size:16px;line-height:30px;">
-							<?php echo $task['task_tbs']['name']; ?>
-						</td>
-					</tr>
-					<?php endforeach; ?>
-				</tbody>
-			</table>
-			<?php endfor; ?>
-		<?php endif; ?>
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2">
+						完了済みタスク一覧
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($tasks as $task): ?>
+				<tr>
+					<td style="width:30px;">
+						<input type="checkbox" class="checkbox" value="<?php echo $task['task_tbs']['id']; ?>" style="width:16px; margin:8px 7px 4px 7px;">
+					</td>
+					<td style="font-size:16px;line-height:30px;">
+						<?php echo $task['task_tbs']['name']; ?>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
 	</div>
 </div>
